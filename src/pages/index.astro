@@ -1,0 +1,34 @@
+---
+import Base from '../layouts/Base.astro';
+import PostCard from '../components/PostCard.astro';
+import { publishedPosts, postUrl } from '../lib/posts';
+const posts = await publishedPosts();
+const latest = posts.find((post) => !post.data.historical);
+const historical = posts.find((post) => post.data.historical);
+---
+<Base active="home">
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-copy">
+      <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> JAVA BACKEND · AI EXPLORATION</p>
+      <h1 id="hero-title">把实践写下来，<br /><span>让思考有迹可循。</span></h1>
+      <p class="hero-description">你好，我是 HX，一名 Java 后端开发者。<br class="desktop-break" />这里记录代码、AI 探索，以及把问题弄明白的过程。</p>
+      <div class="hero-actions"><a class="button button-primary" href="/articles/">阅读文章 <span aria-hidden="true">↗</span></a><a class="text-link" href="/about/">认识一下 <span aria-hidden="true">→</span></a></div>
+    </div>
+    <aside class="field-note" aria-label="博客记录主题">
+      <div class="note-top"><span>FIELD NOTES</span><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 4h14v17l-7-3-7 3V4Z" /><path d="M9 8h6m-6 4h6" /></svg></div>
+      <p class="note-quote">认真做一点，<br />也认真记一点。</p>
+      <div class="note-rule"></div>
+      <ol class="note-topics"><li><span>01</span> Java 与工程实践</li><li><span>02</span> AI 与推理探索</li><li><span>03</span> 工具、方法与日常</li></ol>
+      <div class="note-bottom"><span class="handwritten">学习 → 实践 → 复盘</span><span aria-hidden="true">✳</span></div>
+    </aside>
+  </section>
+  <section class="latest-section" aria-labelledby="latest-title">
+    <div class="section-heading"><div><p class="eyebrow">LATEST NOTES</p><h2 id="latest-title">最近的记录</h2></div><a class="text-link" href="/articles/">全部文章 <span aria-hidden="true">→</span></a></div>
+    {latest && <PostCard post={latest} featured />}
+    {historical && <a class="history-line" href={postUrl(historical)}><span><span class="history-dot" aria-hidden="true"></span>从旧站带来的第一条记录</span><span>2019 · Hello World <span aria-hidden="true">↗</span></span></a>}
+  </section>
+  <section class="directions" aria-labelledby="directions-title">
+    <div class="section-heading"><div><p class="eyebrow">WHAT GOES HERE</p><h2 id="directions-title">慢慢积累的几个方向</h2></div></div>
+    <div class="direction-grid"><div><span class="direction-number">01 / ENGINEERING</span><h3>工程实践</h3><p>从具体问题出发，写清背景、方案和取舍。</p></div><div><span class="direction-number">02 / EXPLORATION</span><h3>AI 探索</h3><p>记录学习与实验，把理解和验证分开。</p></div><div><span class="direction-number">03 / EVERYDAY</span><h3>工具与日常</h3><p>留下一些改善工作与生活的小方法。</p></div></div>
+  </section>
+</Base>
