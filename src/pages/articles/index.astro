@@ -1,0 +1,17 @@
+---
+import Base from '../../layouts/Base.astro';
+import PostCard from '../../components/PostCard.astro';
+import { publishedPosts } from '../../lib/posts';
+const posts = await publishedPosts();
+const categories = [...new Set(posts.map((post) => post.data.category))];
+---
+<Base title="文章" active="articles">
+  <header class="page-heading"><p class="eyebrow">THE NOTEBOOK</p><h1>文章与记录<span>.</span></h1><p>保留问题的来路，也留下解决它的过程。</p></header>
+  <section class="article-browser" aria-label="文章列表">
+    <div class="article-toolbar"><div class="category-filters" aria-label="按分类筛选"><button type="button" class="filter-button" data-filter="all" aria-pressed="true">全部 <span>{posts.length}</span></button>{categories.map((category) => <button type="button" class="filter-button" data-filter={category} aria-pressed="false">{category}</button>)}</div><label class="search-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" /><path d="m16 16 4 4" /></svg><span class="sr-only">搜索文章标题、简介和标签</span><input type="search" data-article-search placeholder="搜索标题、简介、标签…" autocomplete="off" /></label></div>
+    <p class="search-status" data-search-status aria-live="polite">共 {posts.length} 篇记录</p>
+    <div class="article-list">{posts.map((post) => <PostCard post={post} />)}</div>
+    <div class="empty-search" data-empty-search hidden><span aria-hidden="true">⌕</span><h2>暂时没有匹配的记录</h2><p>换一个关键词，或查看全部文章。</p><button class="button button-outline" type="button" data-reset-search>重置筛选</button></div>
+    <noscript><p class="muted">搜索与筛选需要启用 JavaScript，所有已发布文章已在上方完整列出。</p></noscript>
+  </section>
+</Base>

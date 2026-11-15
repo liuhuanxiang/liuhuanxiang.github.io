@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://liuhuanxiang.github.io/sitemap.xml
